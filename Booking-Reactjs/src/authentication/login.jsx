@@ -28,18 +28,27 @@ function Login() {
     }
   };
   const onSubmit = async (event) => {
+ 
+    const { email, password } = event;
 
     try {
-      const accounts = await getDataFromApi();
-      console.log(event)
-      const loggedInAccount = accounts.find(
-        account => account.email === event.email && account.password === event.password
-      );
+      // Gọi API đăng nhập
+      const response = await fetch('http://localhost:3002/accounts/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: email, password: password }),
+      });
 
-      if (loggedInAccount) {
+      const data = await response.json();
+
+      if (response.ok) {
+        // Nếu đăng nhập thành công, điều hướng tới trang admin
         navigate('/admin/');
       } else {
-        alert('Đăng nhập không thành công. Vui lòng kiểm tra lại thông tin đăng nhập.');
+        // Nếu không thành công, hiển thị lỗi
+        alert(data.message || 'Đăng nhập không thành công. Vui lòng kiểm tra lại thông tin.');
       }
     } catch (error) {
       console.error('Error during login:', error);
