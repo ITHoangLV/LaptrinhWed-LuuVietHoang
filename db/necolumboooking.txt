@@ -1,0 +1,3 @@
+ALTER TABLE `hotel_management`.`booking`
+ADD COLUMN `paymentStatus` INT DEFAULT 0,
+ADD COLUMN `paymentMethod` INT DEFAULT 0;

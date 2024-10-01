@@ -10,6 +10,7 @@ const ProductsSection = () => {
       const productsResponse = await axios.get('http://localhost:3002/rooms');
       const categoriesResponse = await axios.get('http://localhost:3002/roomtypes');
       setProducts(productsResponse.data);
+      console.log(productsResponse.data)
       setCategories(categoriesResponse.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -25,17 +26,35 @@ const ProductsSection = () => {
     const category = categories.find(cat => cat.id === categoryId);
     return category ? category.name : 'Unknown Category';
   };
-  const searchRoom = (event) => {
-    // Xử lý logic tìm kiếm ở đây
-    var roomName = event.target.value;
-    if(roomName != '' && roomName){
-      var data = products.filter(x => x.name.includes(roomName) || getCategoryName(x.categoryId).toString().toLowerCase().includes(roomName));
-      setProducts(data);
-    }
-    else{
-      fetchData();
-    }
+// Hàm bỏ dấu tiếng Việt
+const removeVietnameseTones = (str) => {
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d")
+    .replace(/Đ/g, "D");
+};
+
+const searchRoom = (event) => {
+  const roomName = removeVietnameseTones(event.target.value.trim().toLowerCase());
+
+  if (roomName !== '') {
+    // Lọc sản phẩm theo tên phòng, mô tả, hoặc tên danh mục
+    const data = products.filter(x => {
+      const roomNameClean = removeVietnameseTones(x.name.toLowerCase());
+      const descriptionClean = removeVietnameseTones(x.description.toLowerCase());
+      const categoryNameClean = removeVietnameseTones(getCategoryName(x.roomtypeId).toLowerCase());
+
+      return roomNameClean.includes(roomName) || 
+             descriptionClean.includes(roomName) || 
+             categoryNameClean.includes(roomName);
+    });
+    setProducts(data);
+  } else {
+    // Nếu không có input, load lại toàn bộ dữ liệu
+    fetchData();
   }
+};
   return (
     <section className="products">
          <div className="col-sm-6 offset-sm-2 offset-md-0 col-lg-5 d-none d-lg-block" style={{
@@ -99,7 +118,7 @@ const ProductsSection = () => {
                       {product.name}
                     </a>
                   </h5>
-                  <p>Loại Phòng: {getCategoryName(product.categoryId)}</p>
+                  <p>Loại Phòng: {getCategoryName(product.roomtypeId)}</p>
                   <div style={{ display: 'flex', justifyContent: 'space-around' }}>
                     <p>Giá Tiền: {product.price.toLocaleString('vi-VN')}₫</p>
                     <p>Vị Trí: {product.location}</p>

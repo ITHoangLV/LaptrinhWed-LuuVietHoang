@@ -15,10 +15,10 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Định tuyến các router
-app.use('/accounts', accountRouter);
+app.use('/account', accountRouter);
 app.use('/rooms', roomRouter);
 app.use('/roomtypes', roomTypeRouter);
-app.use('/bookings', bookingRouter);
+app.use('/booking', bookingRouter);
 app.use('/news', newsRouter);
 
 // Lắng nghe tại cổng 3000
