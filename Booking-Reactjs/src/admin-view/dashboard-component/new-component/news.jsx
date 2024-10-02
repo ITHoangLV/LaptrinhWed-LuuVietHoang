@@ -149,7 +149,6 @@ const New = () => {
   // Render component
   return (
     <div className="position-relative bg-white d-flex p-0 dashboard-admin margin-0">
-      <Sidebar />
       <div className="container-fluid pt-4 px-4 height-85">
         <h2>Tin Tức</h2>
         <button

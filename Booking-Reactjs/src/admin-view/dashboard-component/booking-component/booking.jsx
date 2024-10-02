@@ -30,7 +30,9 @@ const Booking = () => {
     bookingRoomId: "",
     paymentStatus: 0, // 0: Chưa thanh toán, 1: Đã thanh toán
     paymentMethod: 0, // 0: Offline, 1: Online
-    bookingStatus:0
+    bookingStatus:0,
+    surcharge:0,
+    totalFee:0,
   });
 
   const fetchBookings = async () => {
@@ -62,8 +64,10 @@ const Booking = () => {
         checkInDate: "",
         checkOutDate: "",
         bookingRoomId: "",
-        paymentStatus: 0,
+        paymentStatus: 0,    
         paymentMethod: 0,
+        totalFee:0,
+        surcharge:0
       }); // Clear form fields
     } catch (error) {
       console.error("Error creating booking:", error);
@@ -121,8 +125,10 @@ const Booking = () => {
         checkInDate: "",
         checkOutDate: "",
         bookingRoomId: "",
-        paymentStatus: 0,
+        paymentStatus: 0,    
         paymentMethod: 0,
+        totalFee:0,
+        surcharge:0,
       }); // Clear editBooking state
     } catch (error) {
       console.error("Error editing booking:", error);
@@ -188,7 +194,6 @@ const Booking = () => {
   };
   return (
     <div className="position-relative bg-white d-flex p-0 dashboard-admin margin-0">
-      <Sidebar />
       <div className="container-fluid pt-4 px-4 height-85">
         <h2>Đặt Phòng</h2>
         <button
@@ -371,8 +376,8 @@ const Booking = () => {
 
       {/* Edit Account Popup */}
       {showEditPopup && (
-        <div className="position-fixed top-50 start-50 translate-middle" style={{width:'650px'}}>
-          <div className="bg-light p-5">
+         <div className="position-fixed top-50 start-50 translate-middle" style={{ width: '650px' }}>
+    <div className="bg-light p-5" style={{ maxHeight: '80vh', overflowY: 'auto' }}>
             <h3 className="mb-4">Edit Booking</h3>
             <form onSubmit={handleEditBooking}>
               <div className="mb-3">
@@ -449,7 +454,42 @@ const Booking = () => {
                   required
                 />
               </div>
-
+              <div className="mb-3">
+                  <label htmlFor="bookingPhone" className="form-label">
+                    phụ phí:
+                  </label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    id="bookingPhone"
+                    value={editBooking.surcharge}
+                    onChange={(e) =>
+                      setEditBooking({
+                        ...editBooking,
+                        surcharge: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="bookingPhone" className="form-label">
+                    Tổng phí:
+                  </label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    id="bookingPhone"
+                    value={editBooking.totalFee}
+                    onChange={(e) =>
+                      setEditBooking({
+                        ...editBooking,
+                        totalFee: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </div>
               <div className="mb-3">
                 <label htmlFor="checkInDate" className="form-label">
                   Check In Date

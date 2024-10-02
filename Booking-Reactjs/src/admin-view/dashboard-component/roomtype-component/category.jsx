@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Sidebar from "../sidebar"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
@@ -109,7 +108,6 @@ const Category = () => {
   // Render component
   return (
     <div className="position-relative bg-white d-flex p-0 dashboard-admin margin-0">
-       <Sidebar />
       <div className="container-fluid pt-4 px-4 height-85">
         <h2>Loại Phòng</h2>
         <button className="btn btn-primary mb-3" onClick={handleShowCreatePopup}>Thêm Loại Mới</button>

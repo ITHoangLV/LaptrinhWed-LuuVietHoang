@@ -1,5 +1,5 @@
 // ProductDetail.jsx
-import React, { useEffect, useState } from "react";
+import React, { Children, useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Header from "../../share-view/header";
@@ -7,6 +7,9 @@ import Footer from "../../share-view/footer";
 
 const ProductDetail = () => {
   const { id } = useParams();
+  const [adultCount, setAdultCount] = useState(1);
+  const [childrenCount, setChildrenCount] = useState(0);
+  const [priceTotal, setPriceTotal] = useState(0);
   const [product, setProduct] = useState(null);
   const [services, setServices] = useState([]);
   const [bookings, setBookings] = useState([]);
@@ -19,8 +22,11 @@ const ProductDetail = () => {
     bookingRoomId: id,
     paymentStatus: 0,
     paymentMethod: 0,
+    surcharge:0,
+    totalFee:0
   });
-
+  const [destinations, setDestinations] = useState([]);
+  const [randomDestinations, setRandomDestinations] = useState([]);
   const fetchBookings = async () => {
     try {
       const response = await axios.get("http://localhost:3002/booking");
@@ -32,7 +38,15 @@ const ProductDetail = () => {
   const fetchProduct = async () => {
     try {
       const response = await axios.get(`http://localhost:3002/rooms/${id}`);
-      setProduct(response.data || []);
+         // Đảm bảo giá trị price được chuyển về số trước khi gắn vào priceTotal
+    const productPrice = parseFloat(response.data.price) || 0; // Chuyển đổi thành số, mặc định là 0 nếu không hợp lệ
+
+    // Nếu cần nhân với 100, thực hiện ở đây
+    const normalizedPrice = productPrice * 100;
+
+    setProduct(response.data || []);
+    setPriceTotal(normalizedPrice); // Gắn giá trị sau khi đã xử lý
+    console.log(normalizedPrice);   // In ra giá trị đã chuyển đổi
     } catch (error) {
       console.error("Error fetching product:", error);
     }
@@ -50,6 +64,7 @@ const ProductDetail = () => {
     fetchProduct();
     // fetchServices();
     fetchBookings();
+    fetchDestinations();
     console.log(product, services, bookings);
   }, [id]);
 
@@ -57,10 +72,27 @@ const ProductDetail = () => {
     alert(
       "Cảm ơn quý khách đã đặt phòng, chúng tôi sẽ liên hệ lại với quý khách trong thời gian sớm nhất để xác nhận lại đơn đặt hàng!"
     );
+    
     event.preventDefault();
-    console.log(newBooking);
+
+    // Cập nhật newBooking với định dạng chính xác
+    const bookingData = {
+      bookingName: newBooking.bookingName,
+      bookingEmail: newBooking.bookingEmail,
+      bookingPhone: newBooking.bookingPhone,
+      checkInDate: newBooking.checkInDate,
+      checkOutDate: newBooking.checkOutDate,
+      bookingRoomId: newBooking.bookingRoomId,
+      paymentStatus: newBooking.paymentStatus,
+      paymentMethod: newBooking.paymentMethod,
+      surcharge: parseFloat(newBooking.surcharge.toFixed(2)), // Chuyển đổi surcharge về dạng số thực
+      totalFee: parseFloat(newBooking.totalFee.toFixed(2)) // Chuyển đổi totalFee về dạng số thực
+    };
+
+    console.log(bookingData); // Ghi log dữ liệu để kiểm tra
+
     try {
-      await axios.post("http://localhost:3002/booking", newBooking);
+      await axios.post("http://localhost:3002/booking", bookingData);
       fetchBookings(); // Refresh accounts after creation
       setNewBooking({
         bookingName: "",
@@ -71,11 +103,18 @@ const ProductDetail = () => {
         bookingRoomId: id, // Đảm bảo bookingRoomId có giá trị hợp lệ
         paymentStatus: 0, // Giữ nguyên giá trị mặc định
         paymentMethod: 0, // Giữ nguyên giá trị mặc định
+        surcharge: 0,
+        totalFee: 0
       });
+      setAdultCount(1),
+      setChildrenCount(0)
     } catch (error) {
       console.error("Error creating booking:", error);
+      // Có thể hiển thị thông báo lỗi cho người dùng
+      alert("Đã xảy ra lỗi khi đặt phòng. Vui lòng thử lại.");
     }
-  };
+};
+
   function changePayment(value) {
     if (value === "1") {
       window.open("https://sandbox.vnpayment.vn/paymentv2/Transaction/PaymentMethod.html?token=c840bd82df2c40c49506b4498c1f38cc")
@@ -85,7 +124,79 @@ const ProductDetail = () => {
       paymentMethod: parseInt(value), // Chuyển đổi giá trị thành số nguyên
     });
   }
+  useEffect(() => {
+    // Tính surcharge dựa trên số người lớn và trẻ em khi các giá trị thay đổi
+    const surCharge = ((adultCount - 1) * 100000) + (childrenCount * 50000); // Đơn vị tính là VND
 
+    // Tính tổng chi phí = giá phòng + surcharge
+    const totalFee = priceTotal + surCharge;
+
+    // Định dạng giá trị thành VND với 2 chữ số thập phân
+    // Cập nhật newBooking với surcharge và tổng chi phí
+    setNewBooking((prevBooking) => ({
+      ...prevBooking,
+      surcharge: surCharge ,
+      totalFee: totalFee,
+    }));
+
+
+  }, [adultCount, childrenCount, priceTotal]); 
+
+  function changeNewSurcharge(code, value) {
+    const numericValue = parseInt(value, 10);
+    if (isNaN(numericValue)) return; // Đảm bảo giá trị hợp lệ
+
+    if (code === 1) {
+      setAdultCount(numericValue);
+    }
+    if (code === 2) {
+      setChildrenCount(numericValue);
+    }
+  }
+  const fetchDestinations = () => {
+    const destinationList = [
+      {
+        name: "Thành phố Hồ Chí Minh",
+        image: "https://example.com/ho-chi-minh.jpg",
+      },
+      {
+        name: "Địa đạo Củ Chi",
+        image: "https://example.com/cu-chi-tunnels.jpg",
+      },
+      {
+        name: "Chợ Bến Thành",
+        image: "https://example.com/ben-thanh-market.jpg",
+      },
+      {
+        name: "Khu du lịch Đại Nam",
+        image: "https://example.com/dai-nam-tourist.jpg",
+      },
+      {
+        name: "Khu vui chơi giải trí Suối Tiên",
+        image: "https://example.com/suoi-tien.jpg",
+      },
+      {
+        name: "Dinh Độc Lập",
+        image: "https://example.com/independence-palace.jpg",
+      },
+      {
+        name: "Nhà thờ Đức Bà",
+        image: "https://example.com/notre-dame-cathedral.jpg",
+      },
+      {
+        name: "Bảo tàng Chứng tích Chiến tranh",
+        image: "https://example.com/war-remnants-museum.jpg",
+      },
+    ];
+
+    setDestinations(destinationList);
+    setRandomDestinations(getRandomDestinations(destinationList, 4));
+  };
+
+  const getRandomDestinations = (list, count) => {
+    const shuffled = [...list].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  };
   return (
     <div>
       <Header />
@@ -131,6 +242,23 @@ const ProductDetail = () => {
                     ))}
                   </ul>
                 </div>
+                <div className="col-12 mt-4">
+              <h3>Gợi ý địa chỉ du lịch tại đây</h3>
+              <div className="row">
+                {randomDestinations.map((destination, index) => (
+                  <div className="col-lg-3 col-md-6 mb-4" key={index}>
+                    <div className="destination-card">
+                      <img
+                        src={destination.image}
+                        alt={destination.name}
+                        className="img-fluid"
+                      />
+                      <h5 className="mt-2">{destination.name}</h5>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
               </div>
             )}
 
@@ -193,7 +321,61 @@ const ProductDetail = () => {
                     required
                   />
                 </div>
-
+                <div className="mb-3">
+                  <label htmlFor="bookingPhone" className="form-label">
+                    Số lượng người lớn:
+                  </label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    id="bookingPhone"
+                    value={adultCount}
+                    onChange={(e) =>
+                      changeNewSurcharge(1,e.target.value)
+                    }
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="bookingPhone" className="form-label">
+                    Số lượng trẻ em
+                  </label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    id="bookingPhone"
+                    value={childrenCount}
+                    onChange={(e) =>
+                      changeNewSurcharge(2,e.target.value)
+                    }
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="bookingPhone" className="form-label">
+                    phụ phí:
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="bookingPhone"
+                    value={newBooking.surcharge}
+        
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="bookingPhone" className="form-label">
+                    Tổng phí:
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="bookingPhone"
+                    value={newBooking.totalFee}
+                    required
+                  />
+                </div>
                 <div className="mb-3">
                   {/* <label htmlFor="bookingRoomId" className="form-label">Mã Số Phòng</label> */}
                   <input

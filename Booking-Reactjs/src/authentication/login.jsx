@@ -33,7 +33,7 @@ function Login() {
 
     try {
       // Gọi API đăng nhập
-      const response = await fetch('http://localhost:3002/accounts/login', {
+      const response = await fetch('http://localhost:3002/account/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,6 +45,8 @@ function Login() {
 
       if (response.ok) {
         // Nếu đăng nhập thành công, điều hướng tới trang admin
+        const JwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQSflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+        localStorage.setItem('token', JwtToken);
         navigate('/admin/');
       } else {
         // Nếu không thành công, hiển thị lỗi
@@ -57,7 +59,7 @@ function Login() {
   };
 
   return (
-    <div className="container hero"
+    <div className="hero"
     style={{
       backgroundImage: `url("https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2023/3/21/1170122/296817374_1015897554.jpg")`,
       paddingTop: "0",

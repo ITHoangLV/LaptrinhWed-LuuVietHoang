@@ -31,12 +31,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/roomsview" element={<Productview />} />
-        <Route path="/admin" element={<DashBoard />} />
-        <Route path="/admin/roomtypes" element={<Category />} />
-        <Route path="/admin/rooms" element={<Product />} />
-        <Route path="/admin/accounts" element={<Account />} />
-        <Route path="/admin/bookings" element={<Booking />} />
-        <Route path="/admin/news" element={<News />} />
+        <Route path="/admin/*" element={<DashBoard />} />
         <Route path="/roomdetail/:id" element={<ProductDetail />} />
         <Route path="/about" element={<AboutView />} />
         <Route path="/cuisine" element={<Cuisine />} />
@@ -45,7 +40,7 @@ function App() {
         <Route path="/meeting" element={<Meeting />} />
         <Route path="/wedding" element={<Wedding />} />
         <Route path="/blog" element={<Blog />} />
-        <Route path="/blogdetail" element={<BlogDetail />} />
+        <Route path="/blogdetail/:id" element={<BlogDetail />} />
         
         </Routes>
         <BackToTopButton />

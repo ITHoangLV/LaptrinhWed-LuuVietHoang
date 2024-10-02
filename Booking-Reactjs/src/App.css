@@ -372,3 +372,6 @@ flex-direction: column;
     }
   }
   
+  .table thead th {
+    z-index: 0;
+  }

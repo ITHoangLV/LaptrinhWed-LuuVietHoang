@@ -6,7 +6,7 @@ const { db } = require('../db');
 router.get('/', async (req, res) => {
   try {
     const [bookings] = await db.query(`
-      SELECT id, bookingName, bookingEmail, bookingPhone, checkInDate, checkOutDate, bookingRoomId, bookingStatus, paymentStatus, paymentMethod 
+      SELECT id, bookingName, bookingEmail, bookingPhone, checkInDate, checkOutDate, bookingRoomId, bookingStatus, paymentStatus, paymentMethod, surcharge, totalFee 
       FROM booking
     `);
     res.json(bookings);
@@ -20,7 +20,7 @@ router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const [booking] = await db.query(`
-      SELECT id, bookingName, bookingEmail, bookingPhone, checkInDate, checkOutDate, bookingRoomId, bookingStatus, paymentStatus, paymentMethod 
+      SELECT id, bookingName, bookingEmail, bookingPhone, checkInDate, checkOutDate, bookingRoomId, bookingStatus, paymentStatus, paymentMethod, surcharge, totalFee
       FROM booking 
       WHERE id = ?
     `, [id]);
@@ -35,15 +35,15 @@ router.get('/:id', async (req, res) => {
 
 // Tạo mới một đặt phòng
 router.post('/', async (req, res) => {
-  const { bookingName, bookingEmail, bookingPhone, checkInDate, checkOutDate, bookingRoomId, bookingStatus, paymentStatus, paymentMethod } = req.body;
-  console.log(bookingName, bookingEmail, bookingPhone, checkInDate, checkOutDate, bookingRoomId, bookingStatus, paymentStatus, paymentMethod)
+  const { bookingName, bookingEmail, bookingPhone, checkInDate, checkOutDate, bookingRoomId, bookingStatus, paymentStatus, paymentMethod, surcharge, totalFee } = req.body;
+  console.log(req.body); // Ghi log dữ liệu nhận được
+
   try {
-    await db.query(`
-      INSERT INTO booking (bookingName, bookingEmail, bookingPhone, checkInDate, checkOutDate, bookingRoomId, bookingStatus, paymentStatus, paymentMethod) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
-      [bookingName, bookingEmail, bookingPhone, checkInDate, checkOutDate, bookingRoomId, bookingStatus, paymentStatus, paymentMethod]);
+    await db.query(`INSERT INTO booking (bookingName, bookingEmail, bookingPhone, checkInDate, checkOutDate, bookingRoomId, bookingStatus, paymentStatus, paymentMethod, surcharge, totalFee) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
+      [bookingName, bookingEmail, bookingPhone, checkInDate, checkOutDate, bookingRoomId, bookingStatus, paymentStatus, paymentMethod, surcharge, totalFee]);
     res.status(201).json({ message: 'Đặt phòng thành công' });
   } catch (err) {
+    console.error(err); // Ghi log lỗi để xem chi tiết
     res.status(500).json({ error: err.message });
   }
 });
@@ -51,14 +51,14 @@ router.post('/', async (req, res) => {
 // Cập nhật thông tin đặt phòng
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
-  const { bookingName, bookingEmail, bookingPhone, checkInDate, checkOutDate, bookingRoomId, bookingStatus, paymentStatus, paymentMethod } = req.body;
+  const { bookingName, bookingEmail, bookingPhone, checkInDate, checkOutDate, bookingRoomId, bookingStatus, paymentStatus, paymentMethod, surcharge, totalFee } = req.body;
  
   try {
     await db.query(`
       UPDATE booking 
-      SET bookingName = ?, bookingEmail = ?, bookingPhone = ?, checkInDate = ?, checkOutDate = ?, bookingRoomId = ?, bookingStatus = ?, paymentStatus = ?, paymentMethod = ? 
+      SET bookingName = ?, bookingEmail = ?, bookingPhone = ?, checkInDate = ?, checkOutDate = ?, bookingRoomId = ?, bookingStatus = ?, paymentStatus = ?, paymentMethod = ?, surcharge = ?, totalFee = ? 
       WHERE id = ?`, 
-      [bookingName, bookingEmail, bookingPhone, checkInDate, checkOutDate, bookingRoomId, 0, paymentStatus, paymentMethod, id]);
+      [bookingName, bookingEmail, bookingPhone, checkInDate, checkOutDate, bookingRoomId, bookingStatus, paymentStatus, paymentMethod, surcharge, totalFee, id]);
     res.json({ message: 'Cập nhật đặt phòng thành công' });
   } catch (err) {
     res.status(500).json({ error: err.message });

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from '../../share-view/header';
 import Footer from '../../share-view/footer';
+import { Link } from 'react-router-dom'; // Thêm Link từ react-router-dom
 
 const Blog = () => {
     const [news, setNews] = useState([]);
@@ -47,7 +48,7 @@ const Blog = () => {
                                         <div className="card-body">
                                             <h5 className="card-title">{newsItem.title}</h5>
                                             <p className="card-text">{newsItem.description}</p>
-                                            <a href="/blogdetail" className="btn btn-primary btn-cus">Đọc thêm</a>
+                                            <Link to={`/blogdetail/${newsItem.id}`} className="btn btn-primary btn-cus"> Đọc thêm</Link>
                                         </div>
                                     </div>
                                 </div>
