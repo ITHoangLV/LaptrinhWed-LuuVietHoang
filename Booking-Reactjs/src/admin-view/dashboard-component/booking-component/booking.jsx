@@ -6,6 +6,7 @@ const Booking = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showCreatePopup, setShowCreatePopup] = useState(false);
+  const [totalRevenue, setTotalRevenue] = useState(0); // New state to store total revenue
   const [showEditPopup, setShowEditPopup] = useState(false);
 
   const [newBooking, setNewBooking] = useState({
@@ -39,7 +40,11 @@ const Booking = () => {
     try {
       const response = await axios.get("http://localhost:3002/booking");
       setBookings(response.data || []);
-      console.log(response.data)
+      const total = response.data 
+      .filter((booking) => booking.paymentStatus === 1) // Only include bookings with paymentStatus === 1 (paid bookings)
+      .reduce((acc, booking) => acc + (parseFloat(booking.totalFee) || 0), 0); // Sum the totalFee, ensuring it's a number
+
+    setTotalRevenue(total);
     } catch (error) {
       console.error("Error fetching bookings:", error);
     } finally {
@@ -196,6 +201,7 @@ const Booking = () => {
     <div className="position-relative bg-white d-flex p-0 dashboard-admin margin-0">
       <div className="container-fluid pt-4 px-4 height-85">
         <h2>Đặt Phòng</h2>
+        <div>tổng doanh thu {totalRevenue}</div>
         <button
           className="btn btn-primary mb-3"
           onClick={handleShowCreatePopup}
