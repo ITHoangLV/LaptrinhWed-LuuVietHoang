@@ -28,10 +28,10 @@ router.get('/:id', async (req, res) => {
 
 // Thêm loại phòng mới (CREATE)
 router.post('/', async (req, res) => {
-  const { name, description } = req.body;
+  const { name, description, image } = req.body; // Thêm thuộc tính image vào đây
   try {
-    await db.query('INSERT INTO roomtypes (name, description) VALUES (?, ?)', 
-      [name, description]);
+    await db.query('INSERT INTO roomtypes (name, description, image) VALUES (?, ?, ?)', 
+      [name, description, image]);
     res.status(201).json({ message: 'Tạo loại phòng thành công' });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -41,10 +41,10 @@ router.post('/', async (req, res) => {
 // Cập nhật loại phòng theo ID (UPDATE)
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
-  const { name, description } = req.body;
+  const { name, description, image } = req.body; // Thêm thuộc tính image vào đây
   try {
-    const [result] = await db.query('UPDATE roomtypes SET name = ?, description = ? WHERE id = ?', 
-      [name, description, id]);
+    const [result] = await db.query('UPDATE roomtypes SET name = ?, description = ?, image = ? WHERE id = ?', 
+      [name, description, image, id]); // Thêm image vào câu lệnh cập nhật
     
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: 'Loại phòng không tồn tại' });

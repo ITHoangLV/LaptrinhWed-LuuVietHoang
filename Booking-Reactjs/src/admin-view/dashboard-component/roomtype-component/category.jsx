@@ -7,15 +7,15 @@ const Category = () => {
   const [categories, setCategories] = useState([]);
   const [showCreatePopup, setShowCreatePopup] = useState(false);
   const [showEditPopup, setShowEditPopup] = useState(false);
-  const [newCategory, setNewCategory] = useState({ name: '', description: '' });
-  const [editCategory, setEditCategory] = useState({ id: '', name: '', description: '' });
+  const [newCategory, setNewCategory] = useState({ name: '', description: '', image: '' }); // Thêm image
+  const [editCategory, setEditCategory] = useState({ id: '', name: '', description: '', image: '' }); // Thêm image
   const [loading, setLoading] = useState(true);
 
   // Fetch categories from JSON Server
   const fetchCategories = async () => {
     try {
       const response = await axios.get('http://localhost:3002/roomtypes');
-      setCategories(response.data|| []);
+      setCategories(response.data || []);
     } catch (error) {
       console.error('Error fetching categories:', error);
     } finally {
@@ -28,12 +28,13 @@ const Category = () => {
   }, []);
 
   // Function to handle form submission for creating a new category
-  const handleCreateCategory = async () => {
+  const handleCreateCategory = async (e) => {
+    e.preventDefault(); // Ngăn trang reload
     try {
       await axios.post('http://localhost:3002/roomtypes', newCategory);
       fetchCategories(); // Refresh categories after creation
       setShowCreatePopup(false); // Close the create popup
-      setNewCategory({ name: '', description: '' }); // Clear form fields
+      setNewCategory({ name: '', description: '', image: '' }); // Clear form fields
     } catch (error) {
       console.error('Error creating category:', error);
     }
@@ -61,12 +62,13 @@ const Category = () => {
   };
 
   // Function to handle form submission for editing a category
-  const handleEditCategory = async () => {
+  const handleEditCategory = async (e) => {
+    e.preventDefault(); // Ngăn trang reload
     try {
       await axios.put(`http://localhost:3002/roomtypes/${editCategory.id}`, editCategory);
       fetchCategories(); // Refresh categories after edit
       setShowEditPopup(false); // Close the edit popup
-      setEditCategory({ id: '', name: '', description: '' }); // Clear editCategory state
+      setEditCategory({ id: '', name: '', description: '', image: '' }); // Clear editCategory state
     } catch (error) {
       console.error('Error editing category:', error);
     }
@@ -85,6 +87,7 @@ const Category = () => {
             <th>ID</th>
             <th>Name</th>
             <th>Description</th>
+            <th>Image</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -94,6 +97,7 @@ const Category = () => {
               <td>{category.id}</td>
               <td>{category.name}</td>
               <td>{category.description}</td>
+              <td><img src={category.image} alt="" width={100} /></td> {/* Hiển thị ảnh */}
               <td>
                 <button className="btn btn-sm btn-danger me-2" onClick={() => handleDeleteCategory(category.id)}>Delete</button>
                 <button className="btn btn-sm btn-primary" onClick={() => handleShowEditPopup(category)}>Edit</button>
@@ -142,6 +146,16 @@ const Category = () => {
                   required
                 />
               </div>
+              <div className="mb-3">
+                <label htmlFor="image" className="form-label">Image URL:</label> {/* Thêm trường image */}
+                <input
+                  type="text"
+                  className="form-control"
+                  id="image"
+                  value={newCategory.image}
+                  onChange={e => setNewCategory({ ...newCategory, image: e.target.value })}
+                />
+              </div>
               <button type="submit" className="btn btn-primary">Create</button>
               <button type="button" className="btn btn-secondary ms-2" onClick={() => setShowCreatePopup(false)}>Cancel</button>
             </form>
@@ -175,6 +189,16 @@ const Category = () => {
                   value={editCategory.description}
                   onChange={e => setEditCategory({ ...editCategory, description: e.target.value })}
                   required
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="edit-image" className="form-label">Image URL:</label> {/* Thêm trường image */}
+                <input
+                  type="text"
+                  className="form-control"
+                  id="edit-image"
+                  value={editCategory.image}
+                  onChange={e => setEditCategory({ ...editCategory, image: e.target.value })}
                 />
               </div>
               <button type="submit" className="btn btn-primary">Save Changes</button>

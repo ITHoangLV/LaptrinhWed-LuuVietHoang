@@ -14,6 +14,7 @@ import BlogDetail from './web-view/home-component/blogdetail';
 import Account from './admin-view/dashboard-component/account-component/account';
 import Booking from './admin-view/dashboard-component/booking-component/booking';
 import News from './admin-view/dashboard-component/new-component/news';
+import RoomTypesDetail from './web-view/home-component/roomTypeDetail.jsx'
 import BackToTopButton from './web-view/back-to-top.jsx';
 import Cuisine from './web-view/cuisine.jsx';
 import RoomTypes from './web-view/roomtypes.jsx';
@@ -33,6 +34,8 @@ function App() {
         <Route path="/roomsview" element={<Productview />} />
         <Route path="/admin/*" element={<DashBoard />} />
         <Route path="/roomdetail/:id" element={<ProductDetail />} />
+        <Route path="/roomdetail/:id" element={<ProductDetail />} />
+        <Route path="/roomTypesDetail/:id" element={<RoomTypesDetail />} />
         <Route path="/about" element={<AboutView />} />
         <Route path="/cuisine" element={<Cuisine />} />
         <Route path="/roomtypes" element={<RoomTypes />} />

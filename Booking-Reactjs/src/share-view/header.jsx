@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function Header() {
+  const [roomTypes, setRoomTypes] = useState([]);
+
+  // Fetch room types from the server
+  useEffect(() => {
+    const fetchRoomTypes = async () => {
+      try {
+        const response = await axios.get("http://localhost:3002/roomtypes");
+        setRoomTypes(response.data || []);
+      } catch (error) {
+        console.error("Error fetching room types:", error);
+      }
+    };
+    fetchRoomTypes();
+  }, []);
   return (
     <header style={{
       background: "linear-gradient(to right, #64b3f4, #c2e59c)",
@@ -78,19 +93,14 @@ function Header() {
               <li>
                 <div className="btn-group">
                   <Link to="/roomtypes">Loại Phòng</Link>
-                  <ul className="dropdown-menu" role="menu" style={{width:"200px"}}>
-                    <li>
-                      <a href="/roomtypes/#standard">Phòng Standard (STD)</a>
-                    </li>
-                    <li>
-                      <a href="/roomtypes/#superior">Phòng Superior (SUP)</a>
-                    </li>
-                    <li>
-                      <a href="/roomtypes/#deluxe">Phòng Deluxe (DLX)</a>
-                    </li>
-                    <li>
-                      <a href="/roomtypes/#suite">Phòng Suite (SUT)</a>
-                    </li>
+                  <ul className="dropdown-menu" role="menu" style={{ width: "200px" }}>
+                    {roomTypes.map((roomType) => (
+                      <li key={roomType.id}>
+                        <Link to={`/roomTypesDetail/${roomType.id}`}>
+                          {roomType.name}
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </li>
