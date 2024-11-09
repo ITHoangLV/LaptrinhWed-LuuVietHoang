@@ -1,1 +1,0 @@
-SELECT * FROM todolist_app.todos;
