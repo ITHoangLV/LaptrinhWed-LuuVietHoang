@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -14,6 +14,7 @@ const Product = () => {
     location: "",
     roomtypeId: 0,
   });
+
   const [editProduct, setEditProduct] = useState({
     id: "",
     image: "",
@@ -282,10 +283,10 @@ const Product = () => {
                 </label>
                 <select
                   className="form-control"
-                  id="categoryId"
-                  value={newProduct.categoryId}
+                  id="roomtypeId"
+                  value={newProduct.roomtypeId}
                   onChange={(e) =>
-                    setNewProduct({ ...newProduct, categoryId: e.target.value })
+                    setNewProduct({ ...newProduct, roomtypeId: e.target.value })
                   }
                   required
                 >

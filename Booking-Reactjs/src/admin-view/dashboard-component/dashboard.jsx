@@ -5,7 +5,6 @@ import Product from "./room-component/product";
 import Category from "./roomtype-component/category";
 import Booking from "../../admin-view/dashboard-component/booking-component/booking";
 import Account from "../../admin-view/dashboard-component/account-component/account";
-import News from "../../admin-view/dashboard-component/new-component/news";
 function Dashboard() {
   const navigate = useNavigate(); // Sử dụng để điều hướng
 
@@ -20,9 +19,11 @@ function Dashboard() {
   return (
     <div>
       <div className="sidebar">
-      <Link to="/">
-              <span style={{ color: "white" }}><h2>Quản lý</h2></span>
-      </Link>{" "}
+        <Link to="/">
+          <span style={{ color: "white" }}>
+            <h2>Quản lý</h2>
+          </span>
+        </Link>{" "}
         <ul>
           <li>
             <Link to="/admin/category">
@@ -42,12 +43,7 @@ function Dashboard() {
               <span style={{ color: "white" }}>Đơn Đặt Phòng </span>
             </Link>
           </li>
-          <li>
-            <Link to="/admin/news">
-              {" "}
-              <span style={{ color: "white" }}>Tin tức</span>
-            </Link>
-          </li>
+          {}
           <li>
             <Link to="/admin/accounts">
               <span style={{ color: "white" }}>Tài khoản</span>
@@ -82,7 +78,6 @@ function Dashboard() {
             {/* Thêm các route khác tương ứng */}
             <Route path="accounts" element={<Account />} />
             <Route path="bookings" element={<Booking />} />
-            <Route path="news" element={<News />} />
           </Routes>
         </section>
       </div>

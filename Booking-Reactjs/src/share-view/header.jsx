@@ -28,7 +28,7 @@ function Header() {
             <div className="main-logo">
               <Link to="/">
                 <img
-                  src="https://greenhadong.com/wp-content/uploads/2022/06/Logo-khach-san.png"
+                  src="https://static.vecteezy.com/system/resources/previews/009/200/929/original/pdg-letter-logo-design-with-polygon-shape-pdg-polygon-and-cube-shape-logo-design-pdg-hexagon-logo-template-white-and-black-colors-pdg-monogram-business-and-real-estate-logo-vector.jpg"
                   alt="logo"
                   className="img-fluid"
                   width="80"
@@ -49,7 +49,7 @@ function Header() {
                 <input
                   type="text"
                   className="form-control border-0 bg-transparent"
-                  placeholder="Tìm kiếm trong hơn 100 phòng nghỉ của chúng tôi!"
+                  placeholder="Tìm Kiếm Hơn 100 Phòng Họp Cùng Chúng Tôi!"
                 />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -107,37 +107,6 @@ function Header() {
               <li>
                 <div className="btn-group">
                   <Link to="/roomsview">Phòng</Link>
-                </div>
-              </li>
-              <li>
-                <div className="btn-group">
-                  <Link to="/about">Khám Phá Khách Sạn</Link>
-                </div>
-              </li>
-              <li>
-                <div className="btn-group">
-                  <Link to="/cuisine">Ẩm Thực</Link>
-                </div>
-              </li>
-              <li>
-                <div className="btn-group">
-                  <Link to="/event">Họp & Sự Kiện</Link>
-                  <ul className="dropdown-menu" role="menu" style={{width:"180px"}}>
-                    <li>
-                      <a href="/event">Tổ Chức Sự Kiện</a>
-                    </li>
-                    <li>
-                      <a href="/meeting">Hội Thảo - Hội Họp</a>
-                    </li>
-                    <li>
-                      <a href="/wedding">Lễ Cưới</a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li>
-                <div className="btn-group">
-                  <Link to="/blog">Tin Tức</Link>
                 </div>
               </li>
             </ul>

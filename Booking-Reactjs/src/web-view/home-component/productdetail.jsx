@@ -22,8 +22,8 @@ const ProductDetail = () => {
     bookingRoomId: id,
     paymentStatus: 0,
     paymentMethod: 0,
-    surcharge:0,
-    totalFee:0
+    surcharge: 0,
+    totalFee: 0,
   });
   const [destinations, setDestinations] = useState([]);
   const [randomDestinations, setRandomDestinations] = useState([]);
@@ -35,18 +35,19 @@ const ProductDetail = () => {
       console.error("Error fetching bookings:", error);
     }
   };
+
   const fetchProduct = async () => {
     try {
       const response = await axios.get(`http://localhost:3002/rooms/${id}`);
-         // Đảm bảo giá trị price được chuyển về số trước khi gắn vào priceTotal
-    const productPrice = parseFloat(response.data.price) || 0; // Chuyển đổi thành số, mặc định là 0 nếu không hợp lệ
+      // Đảm bảo giá trị price được chuyển về số trước khi gắn vào priceTotal
+      const productPrice = parseFloat(response.data.price) || 0; // Chuyển đổi thành số, mặc định là 0 nếu không hợp lệ
 
-    // Nếu cần nhân với 100, thực hiện ở đây
-    const normalizedPrice = productPrice * 100;
+      // Nếu cần nhân với 100, thực hiện ở đây
+      const normalizedPrice = productPrice * 100;
 
-    setProduct(response.data || []);
-    setPriceTotal(normalizedPrice); // Gắn giá trị sau khi đã xử lý
-    console.log(normalizedPrice);   // In ra giá trị đã chuyển đổi
+      setProduct(response.data || []);
+      setPriceTotal(normalizedPrice); // Gắn giá trị sau khi đã xử lý
+      console.log(normalizedPrice); // In ra giá trị đã chuyển đổi
     } catch (error) {
       console.error("Error fetching product:", error);
     }
@@ -72,7 +73,7 @@ const ProductDetail = () => {
     alert(
       "Cảm ơn quý khách đã đặt phòng, chúng tôi sẽ liên hệ lại với quý khách trong thời gian sớm nhất để xác nhận lại đơn đặt hàng!"
     );
-    
+
     event.preventDefault();
 
     // Cập nhật newBooking với định dạng chính xác
@@ -86,7 +87,7 @@ const ProductDetail = () => {
       paymentStatus: newBooking.paymentStatus,
       paymentMethod: newBooking.paymentMethod,
       surcharge: parseFloat(newBooking.surcharge.toFixed(2)), // Chuyển đổi surcharge về dạng số thực
-      totalFee: parseFloat(newBooking.totalFee.toFixed(2)) // Chuyển đổi totalFee về dạng số thực
+      totalFee: parseFloat(newBooking.totalFee.toFixed(2)), // Chuyển đổi totalFee về dạng số thực
     };
 
     console.log(bookingData); // Ghi log dữ liệu để kiểm tra
@@ -104,20 +105,22 @@ const ProductDetail = () => {
         paymentStatus: 0, // Giữ nguyên giá trị mặc định
         paymentMethod: 0, // Giữ nguyên giá trị mặc định
         surcharge: 0,
-        totalFee: 0
+        totalFee: 0,
       });
-      setAdultCount(1),
-      setChildrenCount(0)
+      setAdultCount(1), setChildrenCount(0);
+      alert("Đặt Phòng Thành công");
     } catch (error) {
       console.error("Error creating booking:", error);
       // Có thể hiển thị thông báo lỗi cho người dùng
       alert("Đã xảy ra lỗi khi đặt phòng. Vui lòng thử lại.");
     }
-};
+  };
 
   function changePayment(value) {
     if (value === "1") {
-      window.open("https://sandbox.vnpayment.vn/paymentv2/Transaction/PaymentMethod.html?token=c840bd82df2c40c49506b4498c1f38cc")
+      window.open(
+        "https://sandbox.vnpayment.vn/paymentv2/Transaction/PaymentMethod.html?token=c840bd82df2c40c49506b4498c1f38cc"
+      );
     }
     setNewBooking({
       ...newBooking,
@@ -126,7 +129,7 @@ const ProductDetail = () => {
   }
   useEffect(() => {
     // Tính surcharge dựa trên số người lớn và trẻ em khi các giá trị thay đổi
-    const surCharge = ((adultCount - 1) * 100000) + (childrenCount * 50000); // Đơn vị tính là VND
+    const surCharge = (adultCount - 1) * 100000 + childrenCount * 50000; // Đơn vị tính là VND
 
     // Tính tổng chi phí = giá phòng + surcharge
     const totalFee = priceTotal + surCharge;
@@ -135,12 +138,10 @@ const ProductDetail = () => {
     // Cập nhật newBooking với surcharge và tổng chi phí
     setNewBooking((prevBooking) => ({
       ...prevBooking,
-      surcharge: surCharge ,
+      surcharge: surCharge,
       totalFee: totalFee,
     }));
-
-
-  }, [adultCount, childrenCount, priceTotal]); 
+  }, [adultCount, childrenCount, priceTotal]);
 
   function changeNewSurcharge(code, value) {
     const numericValue = parseInt(value, 10);
@@ -153,6 +154,7 @@ const ProductDetail = () => {
       setChildrenCount(numericValue);
     }
   }
+
   const fetchDestinations = () => {
     const destinationList = [
       {
@@ -242,29 +244,12 @@ const ProductDetail = () => {
                     ))}
                   </ul>
                 </div>
-                <div className="col-12 mt-4">
-              <h3>Gợi ý địa chỉ du lịch tại đây</h3>
-              <div className="row">
-                {randomDestinations.map((destination, index) => (
-                  <div className="col-lg-3 col-md-6 mb-4" key={index}>
-                    <div className="destination-card">
-                      <img
-                        src={destination.image}
-                        alt={destination.name}
-                        className="img-fluid"
-                      />
-                      <h5 className="mt-2">{destination.name}</h5>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
               </div>
             )}
 
             {/* Booking Form Section */}
             <div className="col-lg-4">
-              <h2 className="text-center">Form Đặt Chỗ</h2>
+              <h2 className="text-center">Form Đặt Phòng</h2>
               <form onSubmit={handleBookingSubmit}>
                 <div className="mb-3">
                   <label htmlFor="bookingName" className="form-label">
@@ -323,44 +308,27 @@ const ProductDetail = () => {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="bookingPhone" className="form-label">
-                    Số lượng người lớn:
+                    Số lượng Người Họp:
                   </label>
                   <input
                     type="number"
                     className="form-control"
                     id="bookingPhone"
                     value={adultCount}
-                    onChange={(e) =>
-                      changeNewSurcharge(1,e.target.value)
-                    }
+                    onChange={(e) => changeNewSurcharge(1, e.target.value)}
                     required
                   />
                 </div>
+
                 <div className="mb-3">
                   <label htmlFor="bookingPhone" className="form-label">
-                    Số lượng trẻ em
-                  </label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="bookingPhone"
-                    value={childrenCount}
-                    onChange={(e) =>
-                      changeNewSurcharge(2,e.target.value)
-                    }
-                    required
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="bookingPhone" className="form-label">
-                    phụ phí:
+                    Phụ phí:
                   </label>
                   <input
                     type="text"
                     className="form-control"
                     id="bookingPhone"
                     value={newBooking.surcharge}
-        
                     required
                   />
                 </div>
@@ -392,7 +360,7 @@ const ProductDetail = () => {
 
                 <div className="mb-3">
                   <label htmlFor="checkInDate" className="form-label">
-                    Ngày Nhận Phòng:
+                    Ngày Đặt Phòng Họp:
                   </label>
                   <input
                     type="date"
@@ -411,7 +379,7 @@ const ProductDetail = () => {
 
                 <div className="mb-3">
                   <label htmlFor="checkOutDate" className="form-label">
-                    Ngày Trả Phòng:
+                    Ngày Trả Phòng Họp:
                   </label>
                   <input
                     type="date"

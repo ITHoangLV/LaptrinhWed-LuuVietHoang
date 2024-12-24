@@ -18,7 +18,7 @@ const Booking = () => {
     bookingRoomId: "",
     paymentStatus: 0, // 0: Chưa thanh toán, 1: Đã thanh toán
     paymentMethod: 0, // 0: Offline, 1: Online
-    bookingStatus:0
+    bookingStatus: 0,
   });
 
   const [editBooking, setEditBooking] = useState({
@@ -31,20 +31,20 @@ const Booking = () => {
     bookingRoomId: "",
     paymentStatus: 0, // 0: Chưa thanh toán, 1: Đã thanh toán
     paymentMethod: 0, // 0: Offline, 1: Online
-    bookingStatus:0,
-    surcharge:0,
-    totalFee:0,
+    bookingStatus: 0,
+    surcharge: 0,
+    totalFee: 0,
   });
 
   const fetchBookings = async () => {
     try {
       const response = await axios.get("http://localhost:3002/booking");
       setBookings(response.data || []);
-      const total = response.data 
-      .filter((booking) => booking.paymentStatus === 1) // Only include bookings with paymentStatus === 1 (paid bookings)
-      .reduce((acc, booking) => acc + (parseFloat(booking.totalFee) || 0), 0); // Sum the totalFee, ensuring it's a number
+      const total = response.data
+        .filter((booking) => booking.paymentStatus === 1) // Only include bookings with paymentStatus === 1 (paid bookings)
+        .reduce((acc, booking) => acc + (parseFloat(booking.totalFee) || 0), 0); // Sum the totalFee, ensuring it's a number
 
-    setTotalRevenue(total);
+      setTotalRevenue(total);
     } catch (error) {
       console.error("Error fetching bookings:", error);
     } finally {
@@ -69,10 +69,10 @@ const Booking = () => {
         checkInDate: "",
         checkOutDate: "",
         bookingRoomId: "",
-        paymentStatus: 0,    
+        paymentStatus: 0,
         paymentMethod: 0,
-        totalFee:0,
-        surcharge:0
+        totalFee: 0,
+        surcharge: 0,
       }); // Clear form fields
     } catch (error) {
       console.error("Error creating booking:", error);
@@ -96,24 +96,24 @@ const Booking = () => {
     // Chuyển đổi ngày từ định dạng ISO sang định dạng dd-mm-yyyy
     const formatDate = (dateString) => {
       const date = new Date(dateString);
-      const day = String(date.getUTCDate()).padStart(2, '0'); // Lấy ngày và thêm 0 nếu ngày < 10
-      const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Lấy tháng (bắt đầu từ 0) và thêm 0 nếu tháng < 10
+      const day = String(date.getUTCDate()).padStart(2, "0"); // Lấy ngày và thêm 0 nếu ngày < 10
+      const month = String(date.getUTCMonth() + 1).padStart(2, "0"); // Lấy tháng (bắt đầu từ 0) và thêm 0 nếu tháng < 10
       const year = date.getUTCFullYear(); // Lấy năm
       return `${year}-${month}-${day}`; // Trả về định dạng yyyy-mm-dd
     };
-  
+
     // Cập nhật trạng thái editBooking với các giá trị đã định dạng
     setEditBooking({
       ...booking,
       checkInDate: formatDate(booking.checkInDate),
       checkOutDate: formatDate(booking.checkOutDate),
     });
-  
+
     setShowEditPopup(true);
   };
   const handleEditBooking = async (event) => {
     editBooking.bookingStatus = 0;
-    console.log(editBooking)
+    console.log(editBooking);
     event.preventDefault();
     try {
       await axios.put(
@@ -130,10 +130,10 @@ const Booking = () => {
         checkInDate: "",
         checkOutDate: "",
         bookingRoomId: "",
-        paymentStatus: 0,    
+        paymentStatus: 0,
         paymentMethod: 0,
-        totalFee:0,
-        surcharge:0,
+        totalFee: 0,
+        surcharge: 0,
       }); // Clear editBooking state
     } catch (error) {
       console.error("Error editing booking:", error);
@@ -382,8 +382,14 @@ const Booking = () => {
 
       {/* Edit Account Popup */}
       {showEditPopup && (
-         <div className="position-fixed top-50 start-50 translate-middle" style={{ width: '650px' }}>
-    <div className="bg-light p-5" style={{ maxHeight: '80vh', overflowY: 'auto' }}>
+        <div
+          className="position-fixed top-50 start-50 translate-middle"
+          style={{ width: "650px" }}
+        >
+          <div
+            className="bg-light p-5"
+            style={{ maxHeight: "80vh", overflowY: "auto" }}
+          >
             <h3 className="mb-4">Edit Booking</h3>
             <form onSubmit={handleEditBooking}>
               <div className="mb-3">
@@ -461,41 +467,41 @@ const Booking = () => {
                 />
               </div>
               <div className="mb-3">
-                  <label htmlFor="bookingPhone" className="form-label">
-                    phụ phí:
-                  </label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="bookingPhone"
-                    value={editBooking.surcharge}
-                    onChange={(e) =>
-                      setEditBooking({
-                        ...editBooking,
-                        surcharge: e.target.value,
-                      })
-                    }
-                    required
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="bookingPhone" className="form-label">
-                    Tổng phí:
-                  </label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="bookingPhone"
-                    value={editBooking.totalFee}
-                    onChange={(e) =>
-                      setEditBooking({
-                        ...editBooking,
-                        totalFee: e.target.value,
-                      })
-                    }
-                    required
-                  />
-                </div>
+                <label htmlFor="bookingPhone" className="form-label">
+                  phụ phí:
+                </label>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="bookingPhone"
+                  value={editBooking.surcharge}
+                  onChange={(e) =>
+                    setEditBooking({
+                      ...editBooking,
+                      surcharge: e.target.value,
+                    })
+                  }
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="bookingPhone" className="form-label">
+                  Tổng phí:
+                </label>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="bookingPhone"
+                  value={editBooking.totalFee}
+                  onChange={(e) =>
+                    setEditBooking({
+                      ...editBooking,
+                      totalFee: e.target.value,
+                    })
+                  }
+                  required
+                />
+              </div>
               <div className="mb-3">
                 <label htmlFor="checkInDate" className="form-label">
                   Check In Date
@@ -511,7 +517,6 @@ const Booking = () => {
                       checkInDate: e.target.value,
                     })
                   }
-       
                 />
               </div>
 
@@ -530,7 +535,6 @@ const Booking = () => {
                       checkOutDate: e.target.value,
                     })
                   }
-           
                 />
               </div>
               <div className="mb-3">

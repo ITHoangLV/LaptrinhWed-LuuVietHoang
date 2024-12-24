@@ -27,8 +27,7 @@ function Meeting() {
               color:"white",
             }}
           >
-            <h3 className="small__title">Họp &amp; Sự kiện</h3>
-            <h2>Hội Thảo - Hội Họp</h2>
+            
             
           </div>
         </div>

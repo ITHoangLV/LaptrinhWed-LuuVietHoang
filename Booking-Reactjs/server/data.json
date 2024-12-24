@@ -12,23 +12,23 @@
   "roomtypes": [
     {
       "id": "67fd",
-      "name": "Phòng Standard",
-      "description": "STD"
+      "name": "Phòng 10 người",
+      "description": "10"
     },
     {
       "id": "18c8",
-      "name": "Phòng Superior",
-      "description": "SUP"
+      "name": "Phòng 12 người ",
+      "description": "12"
     },
     {
       "id": "e311",
-      "name": "Phòng Deluxe",
-      "description": "DLX"
+      "name": "Phòng 20 người",
+      "description": "20 "
     },
     {
       "id": "16u7",
-      "name": "Phòng Suite",
-      "description": "SUT"
+      "name": "Phòng 30 người",
+      "description": "30"
     }
   ],
   "rooms": [

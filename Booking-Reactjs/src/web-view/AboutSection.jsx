@@ -12,90 +12,56 @@ const AboutSection = () => {
           <div className="row">
             <div className="col-lg-6">
               <img
-                src="public/img/introBanner/1.png"
-                alt="Hotel"
+                src="https://noithatdephelen.com/Uploads/images/2020/ban-hop/HL131.jpg"
+                alt="Meeting Room"
                 className="img-fluid"
               />
             </div>
             <div className="col-lg-6">
-              <h1 className="display-5">
-                Chào Mừng Quý Khách Đến Với Khách Sạn Xanh Lá
-              </h1>
+              <h1 className="display-5">Chào mừng quý khách</h1>
               <p className="lead">
                 Tại khách sạn của chúng tôi, chúng tôi mang đến không gian thoải
                 mái và dịch vụ chất lượng cho mọi du khách. Với các loại phòng
-                phong phú và tiện nghi hiện đại, chúng tôi cam kết mang đến trải
-                nghiệm nghỉ ngơi tuyệt vời nhất cho quý khách.
+                phong phú, lịch sử và tiện nghi hiện đại, chúng tôi cam kết mang
+                đến trải nghiệm tuyệt vời nhất cho quý khách.
               </p>
               <p>
                 Chúng tôi tự hào về dịch vụ khách hàng xuất sắc và cam kết mang
-                đến trải nghiệm lưu trú tuyệt vời cho bạn. Hãy đến với chúng tôi
-                và trải nghiệm không gian ấm cúng và tiện nghi của Khách Sạn
-                Xanh Lá.
+                đến trải nghiệm tuyệt vời cho bạn. Hãy đến với chúng tôi và trải
+                nghiệm không gian lịch sụ sang trọng này
               </p>
             </div>
           </div>
 
           <div className="row mt-5">
             <div className="col-6">
-              <h2>Về Khách Sạn</h2>
+              <h2>Về Phòng Họp </h2>
               <p>
                 Với đội ngũ nhân viên chuyên nghiệp và nhiệt tình, chúng tôi
                 luôn sẵn sàng đáp ứng mọi yêu cầu và mang đến cho khách hàng
-                những trải nghiệm khó quên khi lưu trú tại đây.
+                những trải nghiệm khó quên khi đặt niềm tin tại đây.
               </p>
               <ul>
-                <li>Dịch vụ phục vụ phòng 24/24</li>
                 <li>Wifi tốc độ cao, băng tần kép</li>
                 <li>
                   Điều hoà/Máy lạnh/Thang máy vô cùng hiệu quả, được bảo trì
                   định kỳ
                 </li>
-                <li>Truyền hình vệ tinh với hơn 200 kênh trên toàn quốc</li>
-                <li>Két an toàn với mật mã điện tử</li>
-                <li>Dịch vụ giặt ủi quần áo</li>
-                <li>Dịch vụ trông trẻ</li>
-                <li>Dịch vụ thu đổi ngoại tệ</li>
+                <li>Bàn ghế được nhập khẩu </li>
+                <li>Tính bảo mật thông tin cuộc họp cao </li>
+                <li>
+                  Nhiều kích cỡ máy chiếu giúp khách hàng dễ dàng trong việc lựa
+                  chọn phòngphòng
+                </li>
+                <li>Đội ngũ nhân viên chuyên nghiệp </li>
+                <li>Tiết kiệm và nhanh chóng </li>
               </ul>
             </div>
             <div className="col-lg-6">
               <img
-                src="public/img/introBanner/2.png"
-                alt="Hotel"
+                src="https://dplusvn.com/wp-content/uploads/2020/01/tieu-chuan-vi-tri-dat-phong-hop.jpg"
+                alt="Meeting Room"
                 className="img-fluid"
-              />
-            </div>
-          </div>
-
-          <div className="row mt-5">
-            <div className="col-12">
-              <img
-                src="public/img/introBanner/3.png"
-                alt="Hotel"
-                className="img-fluid"
-                height={"3px"}
-              />
-            </div>
-          </div>
-
-          <div className="row mt-5">
-            <div className="col-12">
-              <img
-                src="public/img/introBanner/4.png"
-                alt="Hotel"
-                className="img-fluid"
-                height={"3px"}
-              />
-            </div>
-          </div>
-
-          <div className="row mt-5">
-            <div className="col-12">
-              <img
-                src="public/img/introBanner/5.png"
-                alt="Hotel"
-                className="img-fluid"
-                height={"3px"}
               />
             </div>
           </div>
@@ -104,15 +70,15 @@ const AboutSection = () => {
             <div className="col-12 col-md-4">
               <div className="card">
                 <img
-                  src="public/img/11.png"
+                  src="https://4.bp.blogspot.com/-EQA-6cchhNE/WbesdpVsUUI/AAAAAAAAAKo/zAYyusjf4JgrkHOrNIuZi3MyLjy0JteIQCLcBGAs/s1600/ban-ghe-phong-hop-gia-re.jpg"
                   className="card-img-top"
-                  alt="Hotel Room"
+                  alt="Meeting Room"
                 />
                 <div className="card-body">
-                  <h5 className="card-title">Phòng Khách Sạn Đẹp</h5>
+                  <h5 className="card-title">Phòng Họp Đẹp</h5>
                   <p className="card-text">
-                    Chúng tôi cam kết mang đến các phòng nghỉ tiện nghi và đầy
-                    đủ các dịch vụ cho quý khách.
+                    Chúng tôi cam kết mang đến các phòng họp tiện nghi và đầy đủ
+                    các dịch vụ cho quý khách.
                   </p>
                 </div>
               </div>
@@ -120,16 +86,15 @@ const AboutSection = () => {
             <div className="col-12 col-md-4">
               <div className="card">
                 <img
-                  src="public/img/13.png"
+                  src="https://th.bing.com/th/id/R.a3b5ee47e8e938f8c328a9fcccfaa88b?rik=6FoDbNhSOpyxBA&pid=ImgRaw&r=0"
                   className="card-img-top"
                   alt="Event Decoration"
                 />
                 <div className="card-body">
                   <h5 className="card-title">Tiện Nghi Vượt Trội</h5>
                   <p className="card-text">
-                    Với các dịch vụ giải trí và ẩm thực đa dạng, khách sạn của
-                    chúng tôi luôn đảm bảo mang đến sự hài lòng tối đa cho khách
-                    hàng.
+                    Với các phòng hiện đại, mới mẻ và đa dạng, dịch vụ của chúng
+                    tôi luôn đảm bảo mang đến sự hài lòng tối đa cho khách hàng.
                   </p>
                 </div>
               </div>
@@ -137,7 +102,7 @@ const AboutSection = () => {
             <div className="col-12 col-md-4">
               <div className="card">
                 <img
-                  src="public/img/12.png"
+                  src="https://th.bing.com/th/id/R.c2c937217cc75fdd5ce9911ff3045293?rik=sEiVyOw%2bADS3yQ&riu=http%3a%2f%2fvietnoithat.com%2fimages%2fupload%2fImage%2fnoi-that-phong-hop-an-tuong-hien-dai-7.jpg&ehk=fegKMkFc0%2b%2bZeAYgmsNfTsb8yMN6%2f9EP2dvxQPQnrHs%3d&risl=&pid=ImgRaw&r=0"
                   className="card-img-top"
                   alt="Special Offers"
                 />
@@ -145,7 +110,7 @@ const AboutSection = () => {
                   <h5 className="card-title">Ưu Đãi Đặc Biệt</h5>
                   <p className="card-text">
                     Khám phá các ưu đãi đặc biệt và chương trình giảm giá cho
-                    khách hàng thân thiết tại khách sạn chúng tôi.
+                    khách hàng thân thiết tại phòng họp của chúng tôi.
                   </p>
                 </div>
               </div>

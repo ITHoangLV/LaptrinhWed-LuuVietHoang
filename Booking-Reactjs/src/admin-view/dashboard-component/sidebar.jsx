@@ -76,7 +76,7 @@ function Sidebar({ setPage }) {
             </Link>
           </div>
 
-          <div
+          {/* <div
             className="nav-item nav-link"
             style={{
               display: "flex",
@@ -90,7 +90,7 @@ function Sidebar({ setPage }) {
             <Link className="dropdown-item" to="/admin/news">
               Tin Tức
             </Link>
-          </div>
+          </div> */}
 
           <div
             className="nav-item nav-link"

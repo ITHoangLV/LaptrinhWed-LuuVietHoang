@@ -19,10 +19,12 @@ function Event() {
             width: "100%",
           }}
         >
-          <div style={{
-            marginTop: "100px",
-            textAlign: "center",
-          }}>
+          <div
+            style={{
+              marginTop: "100px",
+              textAlign: "center",
+            }}
+          >
             <h3 className="small__title">Họp &amp; Sự kiện</h3>
             <h2>TỔ CHỨC SỰ KIỆN</h2>
           </div>
