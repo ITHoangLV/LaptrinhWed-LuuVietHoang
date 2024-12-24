@@ -1,6 +1,0 @@
-ALTER TABLE `hotel_management`.`booking`
-ADD COLUMN `paymentStatus` INT DEFAULT 0,
-ADD COLUMN `paymentMethod` INT DEFAULT 0;
-ALTER TABLE `hotel_management`.`booking`
-ADD COLUMN `surcharge` DECIMAL(10,2) DEFAULT 0 AFTER `paymentMethod`, -- Thêm cột surcharge
-ADD COLUMN `totalFee` DECIMAL(10,2)
